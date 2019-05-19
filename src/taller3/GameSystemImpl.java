@@ -273,6 +273,7 @@ public class GameSystemImpl implements GameSystem {
         for(int i=0;i<guardianCards.getGuardianQty();i++){
             
         }
+        //xddxd
     }
 
     @Override
