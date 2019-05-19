@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package taller3;
-
+import ucn.ArchivoEntrada;
 /**
  *
  * @author fabianxd
@@ -16,6 +16,8 @@ public class Taller3 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Card card1=new Card("1","2");
+        
     }
     
 }
