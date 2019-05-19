@@ -22,7 +22,10 @@ public class GameSystemImpl implements GameSystem {
     public void leerArchivo(ArchivoEntrada cards){
         
     }
-    public void Game(){
+    public void gameTurns(){
+        while(player1.getHp()>0 && player2.getHp()>0){
+            
+        }
         
     }
 

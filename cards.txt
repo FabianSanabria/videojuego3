@@ -1,4 +1,3 @@
-
 Miguel Solis,323FR71,Lengendary,Operating Systems,5,3.1
 Vianca Vega,67TH86N,Lengendary,Software Engineering,7,5.5
 Carlos Pon,HG650KI,Epic,Computer networks,5,3.8

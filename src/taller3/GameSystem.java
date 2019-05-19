@@ -19,4 +19,5 @@ public interface GameSystem {
     public boolean findCardGame(String id);
     public void heroesThatParticipated();
     public void detailsOfLastCombat();  
+    public void gameTurns();
 }
