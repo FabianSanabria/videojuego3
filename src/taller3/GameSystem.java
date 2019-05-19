@@ -12,7 +12,7 @@ package taller3;
 public interface GameSystem {
     
     public Deck chooseYourCards(int player);
-    public void showDuelOptions();
+    public int showDuelOptions();
     public void useWarrior(int player);
     public void useGuardian(int player);
     public void useSpell(int player);

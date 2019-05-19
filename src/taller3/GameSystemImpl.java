@@ -16,7 +16,7 @@ import ucn.Registro;
  * @author fabianxd
  */
 public class GameSystemImpl implements GameSystem {
-    private HeroList Heroes;
+    private HeroList heroes;
     private WarriorList warriorCards;
     private GuardianList guardianCards;
     private SpellList spellCards;
@@ -86,8 +86,9 @@ public class GameSystemImpl implements GameSystem {
         Deck deck2= chooseYourCards(2);
         
         player1 = new Hero(name1,deck1);
+        heroes.addHero(player1);
         player2 = new Hero(name2,deck2);
-        
+        heroes.addHero(player2);
         
         int dice1 = StdRandom.uniform(6)+1;
         int dice2 = StdRandom.uniform(6)+1;
@@ -106,9 +107,37 @@ public class GameSystemImpl implements GameSystem {
     }
     public void gameTurns(){
         while(player1.getHp()>0 && player2.getHp()>0){
+            int optionSelected;
             if(turn==1){
-                
+                optionSelected=showDuelOptions();
+                if(optionSelected==1){
+                    useWarrior(1);
+                }
+                if(optionSelected==2){
+                    useSpell(1);
+                }
+                if(optionSelected==3){
+                    useGuardian(1);
+                }
             }
+            if(turn==2){
+                optionSelected=showDuelOptions();
+                if(optionSelected==1){
+                    useWarrior(2);
+                }
+                if(optionSelected==2){
+                    useSpell(2);
+                }
+                if(optionSelected==3){
+                    useGuardian(2);
+                }
+            }   
+        }
+        if(player1.getHp()>0 && player2.getHp()==0){
+            StdOut.println(player1.getAlias()+" has won");
+        }
+        if(player2.getHp()>0 && player1.getHp()==0){
+            StdOut.println(player2.getAlias()+" has won");
         }
         
     }
@@ -218,6 +247,8 @@ public class GameSystemImpl implements GameSystem {
             
             StdOut.println(".:: "+player1.getDeck().getWarrior().getName()+
             " attacks ::.");
+            player1.dealDamage(player1.getDeck().getWarrior().getDamage());
+            
             if(player2.getDeck().getWarrior().getHp()<=0){
                 StdOut.println("Warrior is dead, the damage is dealt to the "
                         + "Hero "+player2.getAlias());
@@ -234,7 +265,7 @@ public class GameSystemImpl implements GameSystem {
             
             }
         }
-        else{
+        if(player==2){
             StdOut.println(".:: Warrior of "+ player2.getAlias()+" ::.");
             StdOut.println(player2.getDeck().getWarrior().getName()+" -> "+
             player2.getDeck().getWarrior().getRace() + " -> Hp: "    +
@@ -243,6 +274,8 @@ public class GameSystemImpl implements GameSystem {
             
             StdOut.println(".:: "+player2.getDeck().getWarrior().getName()+
             " attacks ::.");
+            player2.dealDamage(player2.getDeck().getWarrior().getDamage());
+            
             if(player1.getDeck().getWarrior().getHp()<=0){
                 StdOut.println("Warrior is dead, the damage is dealt to the "
                         + "Hero "+player1.getAlias());
@@ -253,7 +286,6 @@ public class GameSystemImpl implements GameSystem {
                 StdOut.print(player1.getDeck().getWarrior().getName()+" -> "+
                 player1.getDeck().getWarrior().getRace()+" -> "+ "Hp:"+
                 player1.getDeck().getWarrior().getHp());
-            
                 player1.getDeck().getWarrior().loseHp(player2.getDeck().getWarrior()
                 .getDamage());
             }
@@ -272,6 +304,7 @@ public class GameSystemImpl implements GameSystem {
             
             StdOut.println(".:: Attack with  "
             +player1.getDeck().getSpell().getName()+" .::");
+            player1.dealDamage(player1.getDeck().getSpell().getDamage());
             if(player2.getDeck().getWarrior().getHp()==0){
                 StdOut.println("Warrior is dead, the damage is dealt to the "
                         + "Hero "+player2.getAlias());
@@ -289,7 +322,7 @@ public class GameSystemImpl implements GameSystem {
                 player2.getDeck().getWarrior().getDamage());
             }
         }
-        else{
+        if(player==2){
             StdOut.println(".:: Spell of "+ player2.getAlias()+" ::.");
             StdOut.println(player2.getDeck().getSpell().getName()+" -> "+
             player2.getDeck().getSpell().getRarity() + " -> Damage: "+
@@ -297,6 +330,8 @@ public class GameSystemImpl implements GameSystem {
             
             StdOut.println(".:: Attack with "+player2.getDeck()
             .getSpell().getName()+ " ::.");
+            player2.dealDamage(player2.getDeck().getSpell().getDamage());
+            
             if(player1.getDeck().getWarrior().getHp()<=0){
                 StdOut.println("Warrior is dead, the damage is dealt to the "
                         + "Hero "+player1.getAlias());
@@ -319,8 +354,8 @@ public class GameSystemImpl implements GameSystem {
     }
 
     @Override
-    public void showDuelOptions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int showDuelOptions() {
+        
     }
 
     @Override
