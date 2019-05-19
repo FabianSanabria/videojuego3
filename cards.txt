@@ -1,0 +1,34 @@
+
+Miguel Solis,323FR71,Lengendary,Operating Systems,5,3.1
+Vianca Vega,67TH86N,Lengendary,Software Engineering,7,5.5
+Carlos Pon,HG650KI,Epic,Computer networks,5,3.8
+Luis Pina,SJA543Q,Epic,Programming of Computer,8,4.5
+Katerine Araya,LSKD08W,Common,Programming of Computer,7,5.5
+Manuel Olivares,KJC70AJ,Common,Computer Architecture,8,4.5
+Diego Urrutia,9GSB6A9,Epic,Cloud Computing,6,3.5
+German Morales,78LASK9,Common,Information Systems I,7,5.4
+Ricardo Perez,AS984HS,Legendary,Computer Architecture,6,6
+Aldo Quelopana,K3SD73A,Common,IT Project Management,5,4.1
+Angelica Flores,LK89SD6,Epic,Data Structure,7,4.3
+Brian Keith,98ASDJW,Legendary,Data Science,10,8
+MineSweeper Worshop,11BMJ3,Epic,7.0
+Truck Administration Worshop,J948MHD,Common,6
+Traffic Routes Worshop,09LSJ7A,Epic,5.7
+Pagina Web Worshop,KASJD83,Lengendary,3.6 
+Library Administration System,AS79WH2,Common,4.7
+Bank Security Worshop,MAKJD98,Lengendary,7.2
+IOS Packet Tracer Worshop,NCJ8AD4,Epic,5.4
+Calculator Worshop,M0C8ASJ,Common,6.1
+Battlefield Worshop,KJASD53,Lengendary,5.3
+Video Game Worshop,PAWOEY7,Epic,7.5
+Fabian Rojas,286FR14X,Data Structure,3.8,0
+Juan Quispe,HJL857G,Programming of Computer,5,0
+Javier Munoz,09LDJ65,Database,3.9,0
+Joaquin Solano,98JAS6D,Programming of Computer,4.1,0
+Pablo Salas,8HSD63F,Database,2.1,0
+Sebastian Villarroel,AJ87DH3,Programming of Computer,1,0
+Juan Maury,H3SO84J,Programming Language,3.2,0
+Alvaro Castillo,BC79KJ,Programming of Computer,3.9,0
+Tomas Reimann,79JH64D,Computer Architecture,4.8,0
+Barbara Hormazabal,LK0985W,Signal Analysis,3.5,0
+Vanessa Martinez,PLA041G,Advanced Programming,4.5,0

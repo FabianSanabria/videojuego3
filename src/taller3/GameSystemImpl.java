@@ -25,12 +25,18 @@ public class GameSystemImpl implements GameSystem {
     public void Game(){
         
     }
+
+    /**
+     *
+     * @param player
+     * @return
+     */
     @Override
-    public boolean chooseYourCards(int player){
+    public Deck chooseYourCards(int player){
         Warrior warriorSelected;
         Guardian guardianSelected;
         Spell spellSelected;
-        
+        Deck newDeck;
         StdOut.println(" .:: Warriors ::. ");
         for(int i=0;i<warriorCards.getWarriorQty();i++){
             StdOut.print("[" + i + "]");
@@ -48,7 +54,7 @@ public class GameSystemImpl implements GameSystem {
                 cardSelected=StdIn.readInt();
             }catch(InputMismatchException e){
                 StdOut.println("Choose an integer");
-                return false;
+                return null;
             }
             if(cardSelected<warriorCards.getWarriorQty() && cardSelected>=0){
                 break;
@@ -58,14 +64,6 @@ public class GameSystemImpl implements GameSystem {
             }
         }
         warriorSelected=warriorCards.getWarrior(cardSelected);
-        if(player==1){
-            player1.getDeck().setWarrior(warriorSelected);
-            player1.getDeck().getWarrior().cardSelected();
-        }
-        else{
-            player2.getDeck().setWarrior(warriorSelected);
-            player2.getDeck().getWarrior().cardSelected();
-        }
         
         
         StdOut.println(" .:: Guardians ::. ");
@@ -83,7 +81,7 @@ public class GameSystemImpl implements GameSystem {
                 cardSelected=StdIn.readInt();
             }catch(InputMismatchException e){
                 StdOut.println("Choose an integer");
-                return false;
+                return null;
             }
             if(cardSelected<guardianCards.getGuardianQty()&& cardSelected>=0){
                 break;
@@ -93,15 +91,7 @@ public class GameSystemImpl implements GameSystem {
             }
         }
         guardianSelected=guardianCards.getGuardian(cardSelected);
-        if(player==1){
-            player1.getDeck().setGuardian(guardianSelected);
-            player1.getDeck().getGuardian().cardSelected();
-        }
-        else{
-            player2.getDeck().setGuardian(guardianSelected);
-            player2.getDeck().getGuardian().cardSelected();
-        }
-        
+  
         StdOut.println(" .:: Spells ::. ");
         for(int i=0;i<spellCards.getSpellQty();i++){
             StdOut.print("[" + i + "]");
@@ -116,7 +106,7 @@ public class GameSystemImpl implements GameSystem {
                 cardSelected=StdIn.readInt();
             }catch(InputMismatchException e){
                 StdOut.println("Choose an integer");
-                return false;
+                return null;
             }
             if(cardSelected<spellCards.getSpellQty() && cardSelected>=0){
                 break;
@@ -126,16 +116,10 @@ public class GameSystemImpl implements GameSystem {
             }
         }
         spellSelected=spellCards.getSpell(cardSelected);
-        if(player==1){
-            player1.getDeck().setSpell(spellSelected);
-            player1.getDeck().getSpell().cardSelected();
-        }
-        else{
-            player2.getDeck().setSpell(spellSelected);
-            player2.getDeck().getSpell().cardSelected();
-        }
-        return true;
+        newDeck= new Deck(warriorSelected,guardianSelected,spellSelected);
+        return newDeck;
     }
+    
     @Override
     public void useWarrior(int player){
         if(player==1){
@@ -263,16 +247,34 @@ public class GameSystemImpl implements GameSystem {
         for(int i=0;i<warriorCards.getWarriorQty();i++){
             if(id.equals(warriorCards.getWarrior(i).getId())){
                 StdOut.println("Name: "+ warriorCards.getWarrior(i).getName());
-                StdOut.println("Name: "+ warriorCards.getWarrior(i).getRace());
-                StdOut.println("Name: "+ warriorCards.getWarrior(i).getTimesUsed());
-                StdOut.println("Name: "+ warriorCards.getWarrior(i).getTimesDead());
+                StdOut.println("Race: "+ warriorCards.getWarrior(i).getRace());
+                StdOut.println("Times used: "+ warriorCards.getWarrior(i)
+                .getTimesUsed());
+                StdOut.println("Times dead: "+ warriorCards.getWarrior(i)
+                .getTimesDead());
                 return true;
                 
             }
         }
         for(int i=0;i<guardianCards.getGuardianQty();i++){
-            
+            if(id.equals(guardianCards.getGuardian(i).getId())){
+               StdOut.println("Name: "+ guardianCards.getGuardian(i).getName());
+               StdOut.println("Race: "+ guardianCards.getGuardian(i).getRace());
+               StdOut.println("Times used: "+ guardianCards.getGuardian(i)
+               .getTimesUsed());
+                return true;
+            }
         }
+        for(int i=0;i<spellCards.getSpellQty();i++){
+            if(id.equals(spellCards.getSpell(i).getId())){
+                StdOut.println("Name: "+ spellCards.getSpell(i).getName());
+               StdOut.println("Rarity: "+ spellCards.getSpell(i).getRarity());
+               StdOut.println("Times used: "+ guardianCards.getGuardian(i)
+               .getTimesUsed());
+               return true;
+            }
+        }
+        return false;
         //xddxd
     }
 
