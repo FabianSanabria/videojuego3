@@ -14,7 +14,7 @@ public class Guardian extends Card {
     private double hp;
     private double damage;
 
-    public Guardian(String race, double hp, double damage, String name, String id) {
+    public Guardian(String name, String id, String race, double hp, double damage) {
         super(name, id);
         this.race = race;
         this.hp = hp;

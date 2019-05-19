@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 package taller3;
+import java.io.IOException;
 import ucn.ArchivoEntrada;
 import ucn.StdOut;
 import ucn.StdIn;
 import java.util.InputMismatchException;
+import ucn.StdRandom;
+import ucn.Registro;
 /**
  *
  * @author fabianxd
@@ -19,12 +22,93 @@ public class GameSystemImpl implements GameSystem {
     private SpellList spellCards;
     private Hero player1;
     private Hero player2;
-    public void leerArchivo(ArchivoEntrada cards){
+    private int turn;
+     /**
+     * method that open the file cards.txt and create all the cards
+     */
+    public void addCardsToTheSystem(){
+        warriorCards = new WarriorList(50000);
+        guardianCards = new GuardianList(50000);
+        spellCards = new SpellList(50000);
+        try{
+            ArchivoEntrada arch = new ArchivoEntrada("Cards.txt");
+            while(!arch.isEndFile()){
+                Registro registro = arch.getRegistro();
+                String field1 = registro.getString();
+                String field2 = registro.getString();
+                String field3 = registro.getString();
+                String field4 = registro.getString();
+                String field5 = registro.getString();
+                String field6 = registro.getString();
+
+                if(field5 != null && field6 != null){
+                    String name = field1;
+                    String id = field2;
+                    String rarity = field3;
+                    String race = field4;
+                    double hp = Double.parseDouble(field5);
+                    double damage = Double.parseDouble(field6);
+                    Warrior warrior = new Warrior(name,id,rarity,race,hp,damage);
+                    warriorCards.addWarrior(warrior);
+                }
+                if(field5 == null && field6 == null){
+                    String name = field1;
+                    String id = field2;
+                    String rarity = field3;
+                    double damage = Double.parseDouble(field4);
+                    Spell spell = new Spell(name,id,rarity,damage);
+                    spellCards.addSpell(spell);
+                }
+                if(field6 == null && field5 != null){
+                   String name = field1;
+                   String id = field2;
+                   String race = field3;
+                   double hp = Double.parseDouble(field4);;
+                   double damage = Double.parseDouble(field5);
+                   Guardian guardian = new Guardian(name,id,race,hp,damage);
+                   guardianCards.addGuardian(guardian);
+                }
+            }
+        }
+        catch(IOException e){
+            StdOut.println("The file cards.txt doesn't exist");
+        }
+    }
+    public void determinateDuelTurns(){
+        StdOut.println("Player 1 enter your alias");
+        String name1 = StdIn.readString();
+        Deck deck1 =chooseYourCards(1);
+        //no se si es asi: Deck deck1 = chooseYourCards(Card[] cards);
         
+        StdOut.println("Player 2 enter your alias");
+        String name2 = StdIn.readString();
+        //no se si es asi: Deck deck1 = chooseYourCards(Card[] cards)
+        Deck deck2= chooseYourCards(2);
+        
+        player1 = new Hero(name1,deck1);
+        player2 = new Hero(name2,deck2);
+        
+        
+        int dice1 = StdRandom.uniform(6)+1;
+        int dice2 = StdRandom.uniform(6)+1;
+        while(dice1 == dice2){
+            dice1 = StdRandom.uniform(6)+1;
+            dice2 = StdRandom.uniform(6)+1;
+        }
+        if (dice1 > dice2){
+            turn=1;
+            StdOut.println("Player 1 starts");
+        }
+        else{
+            turn=2;
+            StdOut.println("Player 2 starts");
+        }
     }
     public void gameTurns(){
         while(player1.getHp()>0 && player2.getHp()>0){
-            
+            if(turn==1){
+                
+            }
         }
         
     }

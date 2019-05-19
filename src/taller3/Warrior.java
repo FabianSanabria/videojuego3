@@ -17,7 +17,7 @@ public class Warrior extends Card {
     private double damage;
     private int timesDead;
 
-    public Warrior(String rarity, String race, double hp, double damage, String name, String id) {
+    public Warrior(String name, String id, String rarity, String race, double hp, double damage) {
         super(name, id);
         this.rarity = rarity;
         this.race = race;
