@@ -23,13 +23,19 @@ public class GameSystemImpl implements GameSystem {
     private Hero player1;
     private Hero player2;
     private int turn;
+
+    public GameSystemImpl() {
+        heroes = new HeroList(100000);
+        warriorCards = new WarriorList(50000);
+        guardianCards = new GuardianList(50000);
+        spellCards = new SpellList(50000);
+        this.turn = 0;
+    }
+    
      /**
      * method that open the file cards.txt and create all the cards
      */
     public void addCardsToTheSystem(){
-        warriorCards = new WarriorList(50000);
-        guardianCards = new GuardianList(50000);
-        spellCards = new SpellList(50000);
         try{
             ArchivoEntrada arch = new ArchivoEntrada("Cards.txt");
             while(!arch.isEndFile()){
@@ -74,17 +80,25 @@ public class GameSystemImpl implements GameSystem {
             StdOut.println("The file cards.txt doesn't exist");
         }
     }
-    public void determinateDuelTurns(){
+    
+    @Override
+    public void play(){
         StdOut.println("Player 1 enter your alias");
         String name1 = StdIn.readString();
         Deck deck1 =chooseYourCards(1);
         //no se si es asi: Deck deck1 = chooseYourCards(Card[] cards);
-        
+        if(deck1==null){
+            StdOut.println("Try again");
+            return;
+        }
         StdOut.println("Player 2 enter your alias");
         String name2 = StdIn.readString();
         //no se si es asi: Deck deck1 = chooseYourCards(Card[] cards)
         Deck deck2= chooseYourCards(2);
-        
+        if(deck2==null){
+            StdOut.println("Try again");
+            return;
+        }
         player1 = new Hero(name1,deck1);
         heroes.addHero(player1);
         player2 = new Hero(name2,deck2);
@@ -104,7 +118,9 @@ public class GameSystemImpl implements GameSystem {
             turn=2;
             StdOut.println("Player 2 starts");
         }
+        gameTurns();
     }
+    
     public void gameTurns(){
         while(player1.getHp()>0 && player2.getHp()>0){
             int optionSelected;
@@ -365,7 +381,7 @@ public class GameSystemImpl implements GameSystem {
     }
 
     @Override
-    public boolean findCardGame(String id) {
+    public void findCardGame(String id) {
         for(int i=0;i<warriorCards.getWarriorQty();i++){
             if(id.equals(warriorCards.getWarrior(i).getId())){
                 StdOut.println("Name: "+ warriorCards.getWarrior(i).getName());
@@ -374,7 +390,7 @@ public class GameSystemImpl implements GameSystem {
                 .getTimesUsed());
                 StdOut.println("Times dead: "+ warriorCards.getWarrior(i)
                 .getTimesDead());
-                return true;
+                return;
                 
             }
         }
@@ -384,7 +400,7 @@ public class GameSystemImpl implements GameSystem {
                StdOut.println("Race: "+ guardianCards.getGuardian(i).getRace());
                StdOut.println("Times used: "+ guardianCards.getGuardian(i)
                .getTimesUsed());
-                return true;
+                return;
             }
         }
         for(int i=0;i<spellCards.getSpellQty();i++){
@@ -393,11 +409,10 @@ public class GameSystemImpl implements GameSystem {
                StdOut.println("Rarity: "+ spellCards.getSpell(i).getRarity());
                StdOut.println("Times used: "+ guardianCards.getGuardian(i)
                .getTimesUsed());
-               return true;
+               return;
             }
         }
-        return false;
-        //xddxd
+        StdOut.println("couldnt find the card id");
     }
 
     @Override
@@ -408,6 +423,36 @@ public class GameSystemImpl implements GameSystem {
     @Override
     public void detailsOfLastCombat() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    public int menu(){
+        String String = null;//variable que acepta todo tipo de datos
+        boolean isCorrect = false;//boolean que permite que funcione el while
+        int numberSelected;// Numero que va a ser retornado
+        // Instrucciones
+        StdOut.println(" .:: DISC OF WORLD ::. ");
+        StdOut.println("[1] Play");
+        StdOut.println("[2] Find Card-Game");
+        StdOut.println("[3] Heroes that have participated");
+        StdOut.println("[4] Details of the last combat");
+        StdOut.println("[5] Exit");
+        
+        while(isCorrect == false){ 
+            
+            String = StdIn.readString();
+            if("1".equals(String) || "2".equals(String) 
+            || "3".equals(String) || "4".equals(String) ||
+            "5".equals(String)){
+                
+                isCorrect=true;
+            }
+            else{
+                StdOut.println("Error wrong input");
+                
+        
+            }  
+        }
+        numberSelected = Integer.parseInt(String);
+        return numberSelected;
     }
     
 }

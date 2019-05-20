@@ -5,6 +5,8 @@
  */
 package taller3;
 import ucn.ArchivoEntrada;
+import ucn.StdIn;
+import ucn.StdOut;
 /**
  *
  * @author fabianxd
@@ -16,7 +18,32 @@ public class Taller3 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Card card1=new Card("1","2");
+        GameSystemImpl system = new GameSystemImpl();
+        system.addCardsToTheSystem();
+        int optionSelected;
+        while(true){
+            optionSelected=system.menu();
+            if(optionSelected==1){
+                system.play();
+                
+            }
+            if(optionSelected==2){
+                String id;
+                StdOut.println("Type the id of the card");
+                id=StdIn.readString();
+                system.findCardGame(id);
+            }
+            if(optionSelected==3){
+                
+            }
+            if(optionSelected==4){
+                
+            }
+            if(optionSelected==5){
+                
+            }
+            
+        }
         
     }
     

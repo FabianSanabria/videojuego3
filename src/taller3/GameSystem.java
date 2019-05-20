@@ -16,8 +16,8 @@ public interface GameSystem {
     public void useWarrior(int player);
     public void useGuardian(int player);
     public void useSpell(int player);
-    public boolean findCardGame(String id);
+    public void findCardGame(String id);
     public void heroesThatParticipated();
     public void detailsOfLastCombat();  
-    public void gameTurns();
+    public void play();
 }
