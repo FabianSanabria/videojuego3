@@ -32,6 +32,24 @@ public class GameSystemImpl implements GameSystem {
         this.turn = 0;
     }
     
+     public int validateGameOptions(String inputNumber){
+        try{
+            int option = Integer.parseInt(inputNumber);
+                if(option<=3 && option>0){
+                    return option;  
+                }
+                else{
+                    StdOut.println("Choose a number between the options: 1 "
+                    + "to use warrior, 2 for use spell and 3 to use guardian");
+                    return -1;
+                }
+            }
+            catch(NumberFormatException e){
+                StdOut.println("this isn't a number, please input a number, remember 1 "
+                    + "to use warrior, 2 for use spell and 3 to use guardian");
+                return -1;
+            }
+        }
      /**
      * method that open the file cards.txt and create all the cards
      */
@@ -371,7 +389,17 @@ public class GameSystemImpl implements GameSystem {
 
     @Override
     public int showDuelOptions() {
-        
+        StdOut.println("[1] Use Warrior");
+        StdOut.println("[2] Use Spell");
+        StdOut.println("[3] Use Guardian");
+        StdOut.println("Enter the option you will choose");
+        String option = StdIn.readString();
+        int validatedOption = validateGameOptions(option);
+        while(validatedOption == -1){
+            option = StdIn.readString();
+            validatedOption = validateGameOptions(option);
+        }
+        return validatedOption ;
     }
 
     @Override
@@ -417,12 +445,33 @@ public class GameSystemImpl implements GameSystem {
 
     @Override
     public void heroesThatParticipated() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(int i=0;i<heroes.getHeroQty();i++){
+            if(i == (heroes.getHeroQty())-1){
+                break;
+            }
+            else{
+             StdOut.println(heroes.getHero(i).getAlias()+" v/s " + heroes.getHero(i+1).getAlias());   
+            }
+        }
     }
 
     @Override
     public void detailsOfLastCombat() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Hero firstHero = heroes.getHero((heroes.getHeroQty())-1);
+        StdOut.println("First player of the last combat " + firstHero.getAlias());
+        StdOut.println("Warrior"+firstHero.getDeck().getWarrior()+"Guardian"+firstHero.getDeck().getGuardian()+"Spell"+firstHero.getDeck().getSpell());
+        StdOut.println("Damage dealt "+firstHero.getDamageDealt());
+        Hero lastHero = heroes.getHero(heroes.getHeroQty());
+        StdOut.println("Second player of the last combat " + lastHero.getAlias());
+        StdOut.println("Warrior "+lastHero.getDeck().getWarrior()+"Guardian "+lastHero.getDeck().getGuardian()+"Spell "+lastHero.getDeck().getSpell());
+        StdOut.println(lastHero.getDamageDealt());
+        /*
+        no se si esto se ve feo pero es el mismo print que los 3 print separados
+        StdOut.println("First player of the last combat " + firstHero.getAlias()+
+        "Warrior"+firstHero.getDeck().getWarrior()+"Guardian"+firstHero.getDeck().getGuardian()
+        +"Spell"+firstHero.getDeck().getSpell()+"Damage dealt "+firstHero.getDamageDealt());
+        */
+        
     }
     public int menu(){
         String String = null;//variable que acepta todo tipo de datos

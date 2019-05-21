@@ -48,6 +48,10 @@ public class Hero {
     public void dealDamage(double damage){
         damageDealt= damageDealt + damage;
     }
+
+    public double getDamageDealt() {
+        return damageDealt;
+    }
     
     
 }

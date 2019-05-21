@@ -34,13 +34,13 @@ public class Taller3 {
                 system.findCardGame(id);
             }
             if(optionSelected==3){
-                
+                system.heroesThatParticipated();
             }
             if(optionSelected==4){
-                
+                system.detailsOfLastCombat();
             }
             if(optionSelected==5){
-                
+                System.exit(0);
             }
             
         }
