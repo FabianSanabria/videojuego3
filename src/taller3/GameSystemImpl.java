@@ -32,21 +32,19 @@ public class GameSystemImpl implements GameSystem {
         this.turn = 0;
     }
     
-     public int validateGameOptions(String inputNumber){
+    public int validateOptions(String inputNumber, int topNumber){
         try{
             int option = Integer.parseInt(inputNumber);
-                if(option<=3 && option>0){
+                if(option<=topNumber && option>0){
                     return option;  
                 }
                 else{
-                    StdOut.println("Choose a number between the options: 1 "
-                    + "to use warrior, 2 for use spell and 3 to use guardian");
+                    StdOut.println("Choose a number between the options");
                     return -1;
                 }
             }
             catch(NumberFormatException e){
-                StdOut.println("this isn't a number, please input a number, remember 1 "
-                    + "to use warrior, 2 for use spell and 3 to use guardian");
+                StdOut.println("this isn't a number, please input a number");
                 return -1;
             }
         }
@@ -153,6 +151,7 @@ public class GameSystemImpl implements GameSystem {
                 if(optionSelected==3){
                     useGuardian(1);
                 }
+                turn=2;
             }
             if(turn==2){
                 optionSelected=showDuelOptions();
@@ -165,6 +164,7 @@ public class GameSystemImpl implements GameSystem {
                 if(optionSelected==3){
                     useGuardian(2);
                 }
+                turn=1;
             }   
         }
         if(player1.getHp()>0 && player2.getHp()==0){
@@ -189,7 +189,7 @@ public class GameSystemImpl implements GameSystem {
         Deck newDeck;
         StdOut.println(" .:: Warriors ::. ");
         for(int i=0;i<warriorCards.getWarriorQty();i++){
-            StdOut.print("[" + i + "]");
+            StdOut.print("[" + (i+1) + "]");
             StdOut.println(
             warriorCards.getWarrior(i).getName()+" -> "+
             warriorCards.getWarrior(i).getRarity()+" -> "+
@@ -198,27 +198,19 @@ public class GameSystemImpl implements GameSystem {
             "Damage: "+ warriorCards.getWarrior(i).getDamage());
         }
         StdOut.println("Choose 1 card ");
-        int cardSelected;
-        while(true){
-            try{
-                cardSelected=StdIn.readInt();
-            }catch(InputMismatchException e){
-                StdOut.println("Choose an integer");
-                return null;
-            }
-            if(cardSelected<warriorCards.getWarriorQty() && cardSelected>=0){
-                break;
-            }
-            else{
-                StdOut.println("Choose between the range of the cards");
-            }
+        String option = StdIn.readString();
+        int cardSelected = validateOptions(option,warriorCards.getWarriorQty());
+        while(cardSelected == -1){
+           option = StdIn.readString(); 
+           cardSelected = validateOptions(option,warriorCards.getWarriorQty());
         }
-        warriorSelected=warriorCards.getWarrior(cardSelected);
+        warriorSelected=warriorCards.getWarrior(cardSelected-1);
+        StdOut.println(warriorSelected.getName());
         
         
         StdOut.println(" .:: Guardians ::. ");
         for(int i=0;i<guardianCards.getGuardianQty();i++){
-            StdOut.print("[" + i + "]");
+            StdOut.print("[" + (i+1) + "]");
             StdOut.println(
             guardianCards.getGuardian(i).getName()+" -> "+
             guardianCards.getGuardian(i).getRace()+" -> "+
@@ -226,46 +218,30 @@ public class GameSystemImpl implements GameSystem {
             "Damage: "+ guardianCards.getGuardian(i).getDamage());
         }
         StdOut.println("Choose 1 card ");
-        while(true){
-            try{
-                cardSelected=StdIn.readInt();
-            }catch(InputMismatchException e){
-                StdOut.println("Choose an integer");
-                return null;
-            }
-            if(cardSelected<guardianCards.getGuardianQty()&& cardSelected>=0){
-                break;
-            }
-            else{
-                StdOut.println("Choose between the range of the cards");
-            }
+        option = StdIn.readString();
+        cardSelected = validateOptions(option,guardianCards.getGuardianQty());
+        while(cardSelected == -1){
+           option = StdIn.readString(); 
+           cardSelected = validateOptions(option,guardianCards.getGuardianQty());
         }
-        guardianSelected=guardianCards.getGuardian(cardSelected);
+        guardianSelected=guardianCards.getGuardian(cardSelected-1);
   
         StdOut.println(" .:: Spells ::. ");
         for(int i=0;i<spellCards.getSpellQty();i++){
-            StdOut.print("[" + i + "]");
+            StdOut.print("[" + (i+1)+ "]");
             StdOut.println(
             spellCards.getSpell(i).getName()+" -> "+
             spellCards.getSpell(i).getRarity()+" -> "+
             "Damage: "+ spellCards.getSpell(i).getDamage());
         }
         StdOut.println("Choose 1 card ");
-        while(true){
-            try{
-                cardSelected=StdIn.readInt();
-            }catch(InputMismatchException e){
-                StdOut.println("Choose an integer");
-                return null;
-            }
-            if(cardSelected<spellCards.getSpellQty() && cardSelected>=0){
-                break;
-            }
-            else{
-                StdOut.println("Choose between the range of the cards");
-            }
+        option = StdIn.readString();
+        cardSelected = validateOptions(option,spellCards.getSpellQty());
+        while(cardSelected == -1){
+           option = StdIn.readString(); 
+           cardSelected = validateOptions(option,spellCards.getSpellQty());
         }
-        spellSelected=spellCards.getSpell(cardSelected);
+        spellSelected=spellCards.getSpell(cardSelected-1);
         newDeck= new Deck(warriorSelected,guardianSelected,spellSelected);
         return newDeck;
     }
@@ -394,17 +370,31 @@ public class GameSystemImpl implements GameSystem {
         StdOut.println("[3] Use Guardian");
         StdOut.println("Enter the option you will choose");
         String option = StdIn.readString();
-        int validatedOption = validateGameOptions(option);
+        int validatedOption = validateOptions(option,3);
         while(validatedOption == -1){
             option = StdIn.readString();
-            validatedOption = validateGameOptions(option);
+            validatedOption = validateOptions(option,3);
         }
         return validatedOption ;
     }
 
     @Override
     public void useGuardian(int player) {
-        
+        double heal;
+        if(player==1){
+            if(player1.getDeck().getWarrior().getHp() == 0){
+                heal = player1.getDeck().getGuardian().getHp();
+                player1.getDeck().getWarrior().setHp(heal);
+            }
+            else{
+                heal = player1.getDeck().getGuardian().getHp() + player1.getDeck().getWarrior().getHp();
+                player1.getDeck().getWarrior().setHp(heal);
+            }
+        }
+        if(player==2){
+            
+            
+        }
         
     }
 
@@ -453,18 +443,26 @@ public class GameSystemImpl implements GameSystem {
              StdOut.println(heroes.getHero(i).getAlias()+" v/s " + heroes.getHero(i+1).getAlias());   
             }
         }
+        if(heroes.getHeroQty() == 0){
+            StdOut.println("There are no heros in the system");
+        }
     }
 
     @Override
     public void detailsOfLastCombat() {
-        Hero firstHero = heroes.getHero((heroes.getHeroQty())-1);
+        if(heroes.getHeroQty()>=2){
+        Hero firstHero = heroes.getHero((heroes.getHeroQty())-2);
+        Hero lastHero = heroes.getHero((heroes.getHeroQty())-1);
         StdOut.println("First player of the last combat " + firstHero.getAlias());
-        StdOut.println("Warrior"+firstHero.getDeck().getWarrior()+"Guardian"+firstHero.getDeck().getGuardian()+"Spell"+firstHero.getDeck().getSpell());
+        StdOut.println("Warrior"+firstHero.getDeck().getWarrior().getName()+"Guardian"+firstHero.getDeck().getGuardian().getName()+"Spell"+firstHero.getDeck().getSpell().getName());
         StdOut.println("Damage dealt "+firstHero.getDamageDealt());
-        Hero lastHero = heroes.getHero(heroes.getHeroQty());
         StdOut.println("Second player of the last combat " + lastHero.getAlias());
-        StdOut.println("Warrior "+lastHero.getDeck().getWarrior()+"Guardian "+lastHero.getDeck().getGuardian()+"Spell "+lastHero.getDeck().getSpell());
+        StdOut.println("Warrior "+lastHero.getDeck().getWarrior().getName()+"Guardian "+lastHero.getDeck().getGuardian().getName()+"Spell "+lastHero.getDeck().getSpell().getName());
         StdOut.println(lastHero.getDamageDealt());
+        }
+        else{
+            StdOut.println("There are no duels in the system");
+        }
         /*
         no se si esto se ve feo pero es el mismo print que los 3 print separados
         StdOut.println("First player of the last combat " + firstHero.getAlias()+

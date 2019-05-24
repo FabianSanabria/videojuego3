@@ -4,18 +4,16 @@
  * and open the template in the editor.
  */
 package taller3;
-import ucn.ArchivoEntrada;
+
 import ucn.StdIn;
 import ucn.StdOut;
+
 /**
  *
  * @author fabianxd
  */
-public class Taller3 {
-
-    /**
-     * @param args the command line arguments
-     */
+public class App {
+    
     public static void main(String[] args) {
         // TODO code application logic here
         GameSystemImpl system = new GameSystemImpl();
@@ -45,5 +43,5 @@ public class Taller3 {
         }
         
     }
-    
+   
 }

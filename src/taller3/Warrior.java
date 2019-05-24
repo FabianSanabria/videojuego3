@@ -55,6 +55,11 @@ public class Warrior extends Card {
            hp= hp-damage; 
         }
     }
+
+    public void setHp(double hp) {
+        this.hp = hp;
+    }
+
     
     
     
